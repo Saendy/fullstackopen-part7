@@ -1,32 +1,56 @@
 import axios from 'axios'
 const baseUrl = '/api/blogs'
 
-const getAll = () => {
-    const request = axios.get(baseUrl)
-    return request.then(response => response.data)
+const getAll = async () => {
+  const request = await axios.get(baseUrl)
+  return request.data
 }
 
-const createBlog = (user, blog) => {
-
-    const request = axios.post(baseUrl, blog, { headers: { 'content-type': 'application/json', Authorization: `bearer ${user.token}` } })
-    return request.then(response => response.data)
+const createBlog = async (payload) => {
+  const request = await axios.post(baseUrl, payload.blog, {
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `bearer ${payload.user.token}`,
+    },
+  })
+  return request.data
 }
 
-const addLike = (user, blog) => {
-    const updateBlog = { ...blog }
-    updateBlog.likes++
-    delete updateBlog.user
-
-    const request = axios.put(`${baseUrl}/${blog.id}`, updateBlog, { headers: { 'content-type': 'application/json', Authorization: `bearer ${user.token}` } })
-    return request.then(response => response.data)
+const addLike = async (payload) => {
+  const updateBlog = { ...payload.blog }
+  updateBlog.likes++
+  delete updateBlog.user
+  const request = await axios.put(`${baseUrl}/${payload.blog.id}`, updateBlog, {
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `bearer ${payload.user.token}`,
+    },
+  })
+  return request
 }
 
-
-
-const deleteBlog = (user, blog) => {
-    const request = axios.delete(`${baseUrl}/${blog.id}`, { headers: { 'content-type': 'application/json', Authorization: `bearer ${user.token}` } })
-    return request.then(response => response)
+const addComment = async (payload) => {
+  const request = await axios.post(
+    `${baseUrl}/${payload.blog.id}/comments`,
+    { comment: payload.comment },
+    {
+      headers: {
+        'content-type': 'application/json',
+      },
+    }
+  )
+  return request
 }
 
-const exports = { getAll, createBlog, addLike, deleteBlog }
+const deleteBlog = async (payload) => {
+  const request = await axios.delete(`${baseUrl}/${payload.blog.id}`, {
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `bearer ${payload.user.token}`,
+    },
+  })
+  return request
+}
+
+const exports = { getAll, createBlog, addLike, deleteBlog, addComment }
 export default exports

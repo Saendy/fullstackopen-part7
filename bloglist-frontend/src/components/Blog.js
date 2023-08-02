@@ -1,26 +1,14 @@
-import { useState } from 'react'
-import BlogDetails from './BlogDetails'
-
-const Blog = ({ blog, addLike, user, handleDelete }) => {
-    const [show, setShow] = useState(false)
-
-    const blogStyle = {
-        paddingTop: 10,
-        paddingLeft: 2,
-        border: 'solid',
-        borderWidth: 1,
-        marginBottom: 5
-    }
-
-    return (
-        <div style={blogStyle} className='blog'>
-            {blog.title} {blog.author} {show ?
-                <button onClick={() => setShow(false)}>hide</button>
-                :
-                <button onClick={() => setShow(true)}>show</button>}
-            {show && <BlogDetails blog={blog} addLike={addLike} user={user} handleDelete={handleDelete} />}
-        </div>
-    )
+import { TableRow, TableCell } from '@mui/material'
+import { Link } from 'react-router-dom'
+const Blog = ({ blog }) => {
+  return (
+    <TableRow>
+      <TableCell>
+        <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+      </TableCell>
+      <TableCell>{blog.author}</TableCell>
+    </TableRow>
+  )
 }
 
 export default Blog

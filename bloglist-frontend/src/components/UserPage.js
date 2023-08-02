@@ -1,17 +1,33 @@
-import BlogList from './BlogList'
-import BlogForm from './BlogForm'
+import { useContext } from 'react'
+import UserContext from '../contexts/UserContext'
+import { Typography, Button } from '@mui/material'
+import { Link } from 'react-router-dom'
 
-const UserPage = ({ user, blogs, handleLogout, handleCreate, addLike, handleDelete }) => {
-
+const UserPage = ({ handleLogout }) => {
+  const [user] = useContext(UserContext)
+  if (user) {
     return (
-        <div>
-            <h2>blogs</h2>
-            <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
-            <BlogForm handleCreate={handleCreate} />
-            <BlogList blogs={blogs} addLike={addLike} user={user} handleDelete={handleDelete} />
-        </div>
+      <>
+        <Typography variant="span" sx={{ marginRight: '5px' }}>
+          {user.name} logged in
+        </Typography>
+        <Button color="secondary" variant="contained" onClick={handleLogout}>
+          logout
+        </Button>
+      </>
     )
-
+  } else {
+    return (
+      <Button
+        color="secondary"
+        variant="contained"
+        component={Link}
+        to="/login"
+      >
+        login
+      </Button>
+    )
+  }
 }
 
 export default UserPage

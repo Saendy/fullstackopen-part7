@@ -19,13 +19,11 @@ GET  http://localhost:3003/api/blogs/
 
 ###
 
-POST http://localhost:3003/api/users
+POST http://localhost:3003/api/blogs/64b757d6bd2d43c3d686a23e/comments
 content-type: application/json
 
 {
-    "username": "asdasde",
-    "name": "author",
-    "password": "asdasd"
+    "comment": "test comment"
 }
 ###
 

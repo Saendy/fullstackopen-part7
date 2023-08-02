@@ -1,36 +1,49 @@
-const LoginForm = ({
-    handleSubmit,
-    handleUsernameChange,
-    handlePasswordChange,
-    username,
-    password
-}) => {
-    return (
-        <div>
-            <h2>Login</h2>
+import { TextField, Button, Typography, Card, CardContent } from '@mui/material'
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    username
-                    <input
-                        id='username'
-                        value={username}
-                        onChange={handleUsernameChange}
-                    />
-                </div>
-                <div>
-                    password
-                    <input
-                        id='password'
-                        type="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                    />
-                </div>
-                <button id='login-button' type="submit">login</button>
-            </form>
-        </div>
-    )
+const LoginForm = ({
+  handleSubmit,
+  handleUsernameChange,
+  handlePasswordChange,
+  username,
+  password,
+}) => {
+  return (
+    <Card>
+      <CardContent>
+        <Typography variant="h2">Login</Typography>
+
+        <form onSubmit={handleSubmit}>
+          <div>
+            <TextField
+              label="Username"
+              variant="outlined"
+              id="username"
+              value={username}
+              onChange={handleUsernameChange}
+            />
+          </div>
+          <div>
+            <TextField
+              label="Password"
+              variant="outlined"
+              id="password"
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </div>
+          <Button
+            color="secondary"
+            variant="contained"
+            id="login-button"
+            type="submit"
+          >
+            login
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
+  )
 }
 
 export default LoginForm

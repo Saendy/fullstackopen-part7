@@ -4,12 +4,12 @@ describe('Blog app', function () {
     const user = {
       name: 'Test Duderino',
       username: 'testuser',
-      password: 'bigsecrettestingpassword'
+      password: 'bigsecrettestingpassword',
     }
     const user2 = {
       name: 'Test Duderino2',
       username: 'testuser2',
-      password: 'bigsecrettestingpassword'
+      password: 'bigsecrettestingpassword',
     }
     cy.request('POST', 'http://localhost:3003/api/users/', user)
     cy.request('POST', 'http://localhost:3003/api/users/', user2)
@@ -42,10 +42,12 @@ describe('Blog app', function () {
   })
 
   describe('Blog app', function () {
-
     describe('When logged in', function () {
       beforeEach(function () {
-        cy.login({ username: 'testuser', password: 'bigsecrettestingpassword' })
+        cy.login({
+          username: 'testuser',
+          password: 'bigsecrettestingpassword',
+        })
       })
 
       it('A blog can be created', function () {
@@ -62,7 +64,11 @@ describe('Blog app', function () {
 
       describe('When logged in', function () {
         beforeEach(function () {
-          cy.createblog({ title: 'test-title', author: 'test-author', url: 'test-url' })
+          cy.createblog({
+            title: 'test-title',
+            author: 'test-author',
+            url: 'test-url',
+          })
         })
 
         it('A blog can be liked', function () {
@@ -74,18 +80,25 @@ describe('Blog app', function () {
         it('A blog can be deleted', function () {
           cy.get('.blog').contains('show').click()
           cy.get('.blog').contains('delete').click()
-          cy.get('.blog').should('not.exist');
+          cy.get('.blog').should('not.exist')
         })
 
         it('delete button is not shown to users who did not create blog', function () {
-          cy.login({ username: 'testuser2', password: 'bigsecrettestingpassword' })
+          cy.login({
+            username: 'testuser2',
+            password: 'bigsecrettestingpassword',
+          })
           cy.get('.blog').contains('show').click()
 
-          cy.get('.blog').contains('delete').should('not.exist');
+          cy.get('.blog').contains('delete').should('not.exist')
         })
         describe('with multiple blogs', function () {
           beforeEach(function () {
-            cy.createblog({ title: 'second-title', author: 'test-author', url: 'test-url' })
+            cy.createblog({
+              title: 'second-title',
+              author: 'test-author',
+              url: 'test-url',
+            })
           })
           it('blogs are ordered by likes', function () {
             cy.contains('second-title').contains('show').click()
@@ -94,13 +107,9 @@ describe('Blog app', function () {
 
             cy.get('.blog').eq(0).should('contain', 'second-title')
             cy.get('.blog').eq(1).should('contain', 'test-title')
-
-
           })
         })
       })
-
     })
-
   })
 })
